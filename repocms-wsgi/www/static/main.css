@@ -1,0 +1,227 @@
+body { 
+    font-family: Helvetica, Arial, Verdana;
+    font-size: 0.9em;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    background: #eee;
+    color: #333;
+}
+
+a, a:active, a:visited { 
+    font-weight: bold;
+    color: #3ab;
+    text-decoration: none;
+}
+a:hover { 
+    color: #057;
+}
+label { 
+    color: #777;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+p, h1, h2, h3, h4 { 
+    margin: 3px;
+}
+#wrapper { 
+    width: 100%;
+}
+#logo { 
+    border: 0px;
+}
+#header_wrap { 
+    width: 800px;
+    margin: auto;
+    padding: 0px;
+    margin-top: 0px;
+    text-align: center;
+}
+#header, #header_pad { 
+    width: 100%;
+    background: #222;
+    color: #fff;
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+}
+#messages, #json_messages, #errors, #json_errors { 
+    background: #fc5;
+    border: 1px solid #b72;
+    padding: 5px;
+}
+#json_messages, #json_errors { 
+    display: none;
+    position: fixed;
+    width: 780px;
+}
+
+#header p { margin: 2px; vertical-align: middle; }
+#precontent_wrap { 
+    width: 100%;
+    text-align: center;
+}
+#precontent { 
+    margin: auto;
+    text-align: left;
+    width: 800px;
+}
+#content_wrap { 
+    width: 100%;
+}
+#content { 
+    margin: auto;
+    text-align: left;
+    width: 800px;
+}
+#form_login_top { 
+    padding-top: 8px;
+}
+#form_login_top input[type='email'],
+#form_login_top input[type='password'] { 
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 3px;
+}
+#content input[type='text'],
+#content input[type='email'],
+#content input[type='password'],
+#content textarea { 
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-top: 1px solid #aaa;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+#content button,
+#content input[type='submit'],
+#content input[type='reset'] { 
+    font-weight: bold;
+    text-shadow: -1px -1px #192;
+    color: #fff;
+    padding: 5px;
+    background-image: url('images/trans-grad.png');
+    background-color: #3b5;
+    border: 1px solid #3b5;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+#content select { 
+    padding: 5px;
+    font-weight: bold;
+    border: 1px solid #888;
+    border-bottom: 1px solid #555;
+    background: #eee;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    cursor: pointer;
+}
+    
+#content button:hover, 
+#content input[type='submit']:hover,
+#content input[type='reset']:hover {
+    background: #0a3;
+    cursor: pointer;
+    border: 1px solid #0a3;
+    border-top: 1px solid #072;
+}
+.autosize { 
+    font-family: Helvetica, Arial, Verdana;
+    font-size: 0.9em;
+}
+.blockdiv { 
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: 0px 0px 0px 4px #ddd;
+    padding: 5px;
+    background: #fff;
+    color: #333;
+    margin-top: 15px;
+    position: relative;
+}
+.blockdiv .divload {
+    position: absolute;
+    background: #ffe url('images/loading-bar.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+    color: #ccc;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+.heading_inset { 
+    text-shadow: 1px 1px #fff;
+    color: #444;
+}
+.load_button { 
+    width: 100%;
+}
+
+.spanbutton { 
+    font-size: 1.2em;
+    font-weight: bold;
+    text-shadow: -1px -1px #192;
+    padding: 8px;
+    background-image: url('images/trans-grad.png');
+    background-color: #3b5;
+    border: 1px solid #3b5;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.spanbutton:hover { 
+    background: #0a3;
+    border: 1px solid #0a3;
+    border-top: 1px solid #072;
+}
+.tdleft { 
+    text-align: right;
+    padding: 5px;
+    color: #777;
+    font-size: 0.9em;
+}
+.fixed { 
+    position: fixed;
+    top: 0px;
+    z-index: 100;
+}
+.step { 
+    padding: 0px 5px 0px 5px;
+    border: 1px solid #2a5;
+    background: #2a5;
+    color: #fff;
+    box-shadow: 1px 1px 1px #ccc;
+    text-shadow: -1px -1px #777;
+    font-weight: bold;
+    border-radius: 12px;
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+}
+.tag { 
+    border: 1px solid #298;
+    background: #298;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    padding: 3px;
+    font-size: 0.8em;
+    color: #fff;
+    font-weight: bold;
+    margin: 3px;
+    vertical-align: middle;
+}
+.tag input[type='checkbox'] { 
+    vertical-align: middle;
+}
+    

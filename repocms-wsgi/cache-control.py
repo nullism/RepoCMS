@@ -1,3 +1,18 @@
+"""
+   Copyright 2012 Aaron Meier
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+"""
 import re
 import sys
 import os, shutil
@@ -264,9 +279,7 @@ class CacheControl(object):
         elif self.pb['filename'].endswith('.textile'):
             import textile
             self.out('Converting to Textile on %s'%(self.pb['filename']))
-            #print "==============[ PRE-TEXTILE ]=============\n%s\n"%(self.pb['text'])
             self.pb['text'] = unicode(textile.textile(self.pb['text']))
-            #print "==============[ POST-TEXTILE ]==============\n%s\n"%(self.pb['text'])
         
         elif self.pb['filename'].endswith('.txt'):
             self.out('Converting TXT on %s'%(self.pb['filename']))
@@ -481,7 +494,8 @@ class CacheControl(object):
         self.pb['key'] = self.get_page_key()
         self.pb['lang'] = self.get_page_lang()
         self.out('Done loading page')
-     
+    
+ 
     ## 
     # Purge uploads no longer in use
     #
@@ -526,7 +540,6 @@ class CacheControl(object):
             self.err('Problem adding page: %s'%(self._db._errors))
         self.out('Done updating database')
             
-
      
     ##
     # Strip meta filters
@@ -545,6 +558,7 @@ class CacheControl(object):
         if not self.silent:
             print "OKAY: %s"%(strn)
             
+
     ##
     # Errors
     #
@@ -553,6 +567,7 @@ class CacheControl(object):
         if not self.silent:
             print "ERROR: %s"%(strn)
             
+
     ##
     # Warning
     #
