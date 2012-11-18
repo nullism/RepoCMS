@@ -15,7 +15,6 @@
 """
 import sys, time, json, os, re, random
 from PIL import Image, ImageOps
-from recaptcha.client import captcha
 from math import ceil, floor
 path = os.path.abspath(os.path.join(os.path.dirname(__file__),"./lib/"))
 if path not in sys.path:
@@ -254,8 +253,7 @@ class Page(Handler):
                         errors=self._errors,
                         messages=self._messages,
                         news=self._news,
-                        db=self._db,
-                        captcha_pub_key=self._conf.RECAPTCHA_PUB_KEY)
+                        db=self._db)
 
     ##
     # Template: 404
