@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="{{path_static}}/theme-default/favicon.png" />
+    <script src="{{path_static}}/theme-default/jquery-1.7.2.min.js"></script>
+    <title>{% block title %}Home{% endblock %} | {{site.title}}</title>
+<style>
+{% include 'style.css' %}
+{% include 'menu.css' %}
+{% include 'code.css' %}
+</style>
+<script>
+{% include 'menu.js' %}
+</script>
+</head>
+<body>
+<div id="wrapper">
+<div id="header">
+    <div style="float: left;"><h2 id="site_title" style="margin: 10px;">{{site.title}}</h2></div>
+    <div style="float: right;">
+        <form action="{{path_prefix}}/{{lang}}/search" method="post">
+        <p style="margin: 10px;"><input type="text" name="search" />
+        <input type="submit" name="submit" value="search" /></p>
+        </form>
+    </div>
+    <div style="clear: both;"></div>
+    {{ menu }}
+</div>
+<div id="content">
+    {% if errors %}
+        <div id="errors">
+        {% for e in errors %}
+            <p>{{e}}</p>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if messages %}
+        <div id="messages">
+        {% for m in messages %}
+            <p>{{m}}</p>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+{% block content %}{% endblock %}
+
+</div>
+<div id="footer">
+    <p>&copy; 2012 {{site.title}}</p>
+    <p>Powered by <a href="http://www.repocms.com">RepoCMS</a>, using the {{theme_data.name}} {{theme_data.version}} theme.</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+##
+# Conf.py
+# RepoCMS Configuration variables
+#
+
+# MAINTENANCE, True or False. Determines maintenance mode
+MAINTENANCE = False
+
+##
+# Do not end paths with '/'
+# DIR_BASE = The path to repocms root 
+#
+DIR_BASE = '/home/repocms/repocms-wsgi'
+
+# The basename of the special 'upload' directory
+DIR_UPLOAD_NAME = 'uploads'
+
+# The directory path to the active theme
+DIR_THEME = DIR_BASE + '/templates/theme-default'
+
+# You probably shouldn't change these
+DIR_CACHE = DIR_BASE + '/templates/cache'
+DIR_STATIC = DIR_BASE + '/www/static'
+DIR_CONTENT = DIR_BASE + '/content'
+DIR_STATIC_UPLOAD = DIR_STATIC + '/' + DIR_UPLOAD_NAME
+DIR_CONTENT_UPLOAD = DIR_CONTENT + '/' + DIR_UPLOAD_NAME
+
+# Default language, 3 character code like 'eng'
+DEFAULT_LANG = 'eng'
+
+# Default page name
+DEFAULT_PAGE = 'home'
+
+# Database configuration
+DB_USER = 'repocms'
+DB_PASS = 'PASSWORD'
+DB_HOST = 'localhost'
+DB_PORT = ''
+DB_BASE = 'repocms'
+
+# Email addresses
+EMAIL_NOREPLY = 'noreply@localhost'
+EMAIL_SUPPORT = 'support@localhost'
+
+##
+# Enabled filters
+# Filters not listed here will not be ran against your content
+#
+ENABLED_FILTERS = [ 
+                    'code', # Highlight code, uses pygments
+                    'disqus', # Embeds disqus comments
+                    'image', # Parse images, uses PIL
+                    'include', # Include external pages
+                    'link', # Generate links
+                    'tableofcontents', # Table of contents, uses lxml
+                    'textreverse', # Example filter
+                    'resthtml',
+                    'youtube',
+                  ]
+
+# The WebHost
+SERVER_NAME = 'localhost'
+PATH_PROTOCOL = 'http://'
+PATH_WEBHOST = PATH_PROTOCOL + SERVER_NAME
+
+
+# Prefix all urls with this, should start with '/'
+PATH_PREFIX = ''
+
+# The path to static content, defined in your webserver config
+PATH_STATIC = '/static'
+
+# The path to your uploads
+PATH_UPLOAD = PATH_STATIC + '/uploads'
+
+# The title of your website
+SITE_TITLE = 'RepoCMS'
+

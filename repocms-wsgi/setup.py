@@ -104,7 +104,8 @@ class Setup(object):
             line = line.replace('\n','')
             if line.strip() == '':
                 continue
-            self.out("Running: %s"%(line))
+            self._db.sql_execute(line)
+            #self.out("Running: %s"%(line))
 
         self.out("END: Creating tables")
             
