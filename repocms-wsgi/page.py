@@ -13,7 +13,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 """
-
 import sys, time, json, os, re, random
 from PIL import Image, ImageOps
 from recaptcha.client import captcha
@@ -92,6 +91,7 @@ class Page(Handler):
         if self._ut._errors:
             self.weblog_errors(self._ut._errors)
         return out
+
     
     ##
     # HTML: Index
@@ -121,6 +121,7 @@ class Page(Handler):
         self._page['title'] = page_d.get('page_title')
         self._page['modified'] = page_d.get('page_modified')
         self._page['lang'] = page_d.get('lang_key')
+        self._page['keywords'] = page_d.get('page_keywords',[])
         try:
             self._page['content'] = self._jcache.get_template(page_file).render(
                                 path_static=self._conf.PATH_STATIC,
@@ -133,11 +134,42 @@ class Page(Handler):
             return self.template('page.html')
         except(Exception),e:
             return self.template_404()
+    
+
+    ##
+    # HTML: Page List
+    #
+    def html_page_list(self, lang_key, list_type, arg, start=0, limit=25):
+        self._lang = lang_key
+        try:
+            start = int(start)
+            limit = int(limit)
+        except:
+            return self.template_404()
+
+        results = []
+        total = 0
+        arg = self.urldecode(arg)
+
+        if list_type == 'keyword':
+            results = self._db.get_pages_by_keyword(arg, start, limit)
+            total = self._db.get_pages_by_keyword_total(arg)
+         
+        self._template_add['arg'] = arg
+        self._template_add['results'] = results
+        self._template_add['list_type'] = list_type
+        self._template_add['pager'] = {'start':start,
+                                       'limit':limit,
+                                       'total':total,
+                                       'pages':int(ceil(float(total)/limit)),
+                                       'page':int(ceil(float(start)/limit))+1}
+        return self.template('pagelist.html')
+        
             
     ##
     # HTML: Search
     #
-    def html_search(self, lang, start=0, limit=1):
+    def html_search(self, lang, start=0, limit=25):
         self._lang = lang
         try:
             start = int(start)

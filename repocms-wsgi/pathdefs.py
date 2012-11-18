@@ -21,6 +21,8 @@ def get_paths(environ):
     paths = (   
             (r'^/{0,1}$', ['GET','POST'], page.html_index, "text/html"),
             (r'^/(\w\w\w)/{0,1}$', ['GET','POST'], page.html_index, "text/html"),
+            (r'^/(\w\w\w)/pages/by(\w+)/([\w\s]+)/{0,1}$', ['GET','POST'], page.html_page_list, "text/html"),
+            (r'^/(\w\w\w)/pages/by(\w+)/(\w+)/(\d+)/(\d+)/{0,1}$', ['GET','POST'], page.html_page_list, "text/html"),
             (r'^/(\w\w\w)/search/{0,1}$', ['GET','POST'], page.html_search, "text/html"),
             (r'^/(\w\w\w)/search/(\d+)/(\d+)/{0,1}$', ['GET','POST'], page.html_search, "text/html"),
             (r'^/(\w\w\w)/([0-9a-zA-Z\-\_]+)/{0,1}$', ['GET','POST'], page.html_page, "text/html"),

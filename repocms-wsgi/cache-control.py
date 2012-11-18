@@ -324,7 +324,7 @@ class CacheControl(object):
     def get_keywords(self):
         k = self.get_meta_data('keywords')
         if k:
-            return k
+            return [w.strip() for w in k[0].split(',')]
         return []
         
     
@@ -372,6 +372,7 @@ class CacheControl(object):
         tmin = tmin.replace('\n',' ')
         tmin.strip()
         return tmin
+
     
     ##
     # Get the title
@@ -383,6 +384,7 @@ class CacheControl(object):
         title = self.pb['filename'].split('/')[-1]\
                 .split('\\')[-1].split('__')[-1].split('.')[0]
         return title
+
         
     ##
     # Get page key
@@ -391,6 +393,7 @@ class CacheControl(object):
         pkey = os.path.basename(self.pb['filename'])
         pkey = pkey.split('.')[0].split('__')[-1]
         return pkey
+
             
     ##
     # Get page filename cache
@@ -402,6 +405,7 @@ class CacheControl(object):
         fname_cache = fname_cache.replace('.'+fname_cache.split('.')[-1],'.html')
         fname_cache = os.path.join(self._conf.DIR_CACHE, fname_cache)
         return fname_cache
+
         
     ##
     # Get page language
@@ -410,6 +414,7 @@ class CacheControl(object):
         lang = self.pb['filename']
         lang = os.path.basename(lang).split('__')[0]
         return lang
+
     
     ##
     # do_page_caching
@@ -452,6 +457,7 @@ class CacheControl(object):
                     self.err('%s - %s'%(fname, e))
                     
         self.remove_old_pages()
+
                     
     ##
     # Do upload caching

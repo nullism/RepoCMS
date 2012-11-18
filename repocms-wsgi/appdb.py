@@ -13,15 +13,30 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 """
-
 import sys, time, random, os
 path = os.path.abspath(os.path.join(os.path.dirname(__file__),"./lib/"))
 if path not in sys.path:
     sys.path.insert(0,path)
 from dbwrap import DBWrap
 
-
 class AppDB(DBWrap):  
+
+    ##
+    # Add keywords
+    # @param keywords [list] List of keywords
+    # @param page_key [str] Page Key
+    # @param lang_key [str] Three character language key
+    #
+    def add_keywords(self, keywords, page_key, lang_key):
+        for keyword in keywords:
+            sql = '''
+                INSERT INTO keyword (keyword, page_key, lang_key)
+                VALUES (%(keyword)s, %(page_key)s, %(lang_key)s)
+                '''
+            self.sql_execute(sql, {'keyword':keyword, 
+                                   'page_key':page_key,
+                                   'lang_key':lang_key})
+        return True
 
     ##
     # Add a link
@@ -83,7 +98,12 @@ class AppDB(DBWrap):
                        page_text=%(page_text)s,
                        page_redirect=%(page_redirect)s
               '''
-        return self.sql_execute(sql, d)
+
+        res1 = self.sql_execute(sql, d)
+        self.remove_keywords_by_page_lang(d['page_key'], d['lang_key'])
+        self.add_keywords(d['page_keywords'], d['page_key'], d['lang_key'])
+
+        return True
         
      
     ##
@@ -141,10 +161,52 @@ class AppDB(DBWrap):
                  WHERE page_key=%(page_key)s 
                  AND lang_key=%(lang_key)s
                  LIMIT 1'''
-        return self.sql_select(sql, True, 
-                {'page_key': page_key, 'lang_key':lang_key})
+        keyword_sql = '''SELECT * FROM keyword
+                         WHERE page_key=%(page_key)s
+                         AND lang_key=%(lang_key)s'''
+        page = self.sql_select(sql, True, 
+               {'page_key': page_key, 'lang_key':lang_key})
+        if not page:
+            return {}
+        page['page_keywords'] = self.sql_select(keyword_sql, False,
+                                {'page_key':page_key, 'lang_key':lang_key})
+        return page
         
-                
+    ##
+    # Get pages by keyword
+    #
+    def get_pages_by_keyword(self, keyword, start=0, limit=25):
+        sql = '''
+              SELECT p.* FROM page p
+              JOIN keyword k ON k.page_key=p.page_key
+              AND k.lang_key = p.lang_key
+              AND k.keyword = %(keyword)s
+              LIMIT %(start)s,%(limit)s
+              '''
+        d = { 'keyword':keyword,
+              'start':start,
+              'limit':limit }
+        return self.sql_select(sql, False, d)   
+
+
+    ##
+    # Get pages by keyword total
+    # 
+    def get_pages_by_keyword_total(self, keyword, start=0, limit=25):
+        sql = '''
+              SELECT COUNT(p.page_key) AS total FROM page p
+              JOIN keyword k ON k.page_key=p.page_key
+              AND k.lang_key = p.lang_key
+              AND k.keyword = %(keyword)s
+              '''
+        d = { 'keyword':keyword,
+              'start':start,
+              'limit':limit }
+        row = self.sql_select(sql, True, d)    
+        return row['total'] 
+
+
+            
     ##
     # Get page by search
     # 
@@ -188,6 +250,18 @@ class AppDB(DBWrap):
                  LIMIT 1'''
         return self.sql_select(sql, True, {'fname':fname})
 
+
+    ##
+    # Remove keywords
+    #
+    def remove_keywords_by_page_lang(self, page_key, lang_key):
+        
+        sql = '''DELETE FROM keyword WHERE
+                 page_key=%(page_key)s 
+                 AND lang_key=%(lang_key)s'''
+        return self.sql_execute(sql, {'page_key':page_key, 
+                                      'lang_key':lang_key})
+
         
     ##
     # Remove page
@@ -196,9 +270,12 @@ class AppDB(DBWrap):
         sql = '''DELETE FROM page 
                  WHERE page_key=%(page_key)s
                  AND lang_key=%(lang_key)s LIMIT 1'''
-        return self.sql_execute(sql, {'page_key':page_key,
-                                      'lang_key':lang_key})
-                                      
+        res = self.sql_execute(sql, {'page_key':page_key,
+                                     'lang_key':lang_key})
+
+        return self.remove_keywords_by_page_lang(page_key, lang_key)     
+
+                                 
     ##
     # Remove upload
     #
