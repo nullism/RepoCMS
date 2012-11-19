@@ -149,11 +149,15 @@ class Page(Handler):
         results = []
         total = 0
         arg = self.urldecode(arg)
+        keywords = []
 
         if list_type == 'keyword':
+            keywords = self._db.get_keywords_by_lang(lang_key)
             results = self._db.get_pages_by_keyword(arg, start, limit)
             total = self._db.get_pages_by_keyword_total(arg)
-         
+    
+        
+        self._template_add['keywords'] = keywords 
         self._template_add['arg'] = arg
         self._template_add['results'] = results
         self._template_add['list_type'] = list_type

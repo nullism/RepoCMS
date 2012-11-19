@@ -299,7 +299,7 @@ class CacheControl(object):
     #
     def get_meta_data(self, key):
          
-        regex = r'\(\((\s{0,1}%s.*)\)\)'%(key)            
+        regex = r'\(\((\s{0,1}%s.*?)\)\)'%(key)            
         p = re.compile(regex)
         m = p.search(self.pb['text'])
         if m:
@@ -324,7 +324,7 @@ class CacheControl(object):
     def get_keywords(self):
         k = self.get_meta_data('keywords')
         if k:
-            return [w.strip() for w in k[0].split(',')]
+            return [w.strip().lower() for w in k[0].split(',')]
         return []
         
     

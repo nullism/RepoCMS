@@ -10,13 +10,13 @@ MAINTENANCE = False
 # Do not end paths with '/'
 # DIR_BASE = The path to repocms root 
 #
-DIR_BASE = '/home/repocms/repocms-wsgi'
+DIR_BASE = '/home/repocms/RepoCMS/src'
 
 # The basename of the special 'upload' directory
 DIR_UPLOAD_NAME = 'uploads'
 
 # The directory path to the active theme
-DIR_THEME = DIR_BASE + '/templates/theme-default'
+DIR_THEME = DIR_BASE + '/templates/theme-light'
 
 # You probably shouldn't change these
 DIR_CACHE = DIR_BASE + '/templates/cache'
@@ -32,11 +32,11 @@ DEFAULT_LANG = 'eng'
 DEFAULT_PAGE = 'home'
 
 # Database configuration
-DB_USER = 'repocms'
-DB_PASS = 'PASSWORD'
+DB_USER = ''
+DB_PASS = ''
 DB_HOST = 'localhost'
 DB_PORT = ''
-DB_BASE = 'repocms'
+DB_BASE = ''
 
 # Email addresses
 EMAIL_NOREPLY = 'noreply@localhost'

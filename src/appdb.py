@@ -121,6 +121,17 @@ class AppDB(DBWrap):
               '''
         return self.sql_execute(sql, d)
 
+    ##
+    # Get keywords by lang_key
+    #
+    def get_keywords_by_lang(self, lang_key):
+        sql = '''
+              SELECT keyword, COUNT(keyword) AS total 
+              FROM keyword WHERE lang_key=%(lang_key)s
+              GROUP BY keyword ORDER BY total DESC
+              '''
+        return self.sql_select(sql, False, {'lang_key':lang_key})
+
 
     ##
     # Get languages
