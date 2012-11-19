@@ -1,0 +1,34 @@
+<div class="nav" id="nav">
+    <ul id="menu" class="menu nopad">
+{% for link in links %}
+    <li class='nopad'>
+        {% if link.link_path != '' %}
+        <a href="{{link.link_path}}" target="{{link.link_target}}" title="{{link.link_title}}">{{link.link_name}}</a>
+        {% else %}
+            <span>{{link.link_name}}</span>
+        {% endif %}
+        <ul class='nopad'>
+    {% for link2 in link.link_children %}
+        <li class='nopad'>
+            {% if link2.link_path != '' %}
+            <a href="{{link2.link_path}}" target="{{link2.link_target}}" title="{{link2.link_title}}">{{link2.link_name}}</a>
+            {% else %}
+                <span>{{link2.link_name}}</span>
+            {% endif %}
+            <ul class='nopad'>
+        {% for link3 in link2.link_children %}
+            <li class='nopad submenu'>
+                <a href="{{link3.link_path}}" target="{{link3.link_target}}" title="{{link3.link_title}}">{{link3.link_name}}</a>
+            </li>
+        {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+        </ul>
+    </li>
+{% endfor %}
+    </ul>
+<script>
+var dropdown=new TINY.dropdown.init("dropdown", {id:'menu', active:'menuhover'});
+</script>
+</div>

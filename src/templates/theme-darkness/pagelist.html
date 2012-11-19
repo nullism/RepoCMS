@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<h2>{{ _('Page List') }}</h2>
+{% if add.keywords %}
+    <div id="page_keywords">
+    {% for kw in add.keywords %}
+    <a href="{{path_prefix}}/{{lang}}/pages/bykeyword/{{kw.keyword}}">
+        <span class="keyword">{{kw.keyword}} - {{kw.total}}</span>
+    </a>
+    {% endfor %}
+    </div>
+{% endif %}
+{% if add.results %}
+    <p>Showing <strong>{{add.results|count}}</strong> of {{add.pager.total}} results for "{{add.arg}}"</p>
+{% for result in add.results %}
+    <p class="search_result">
+        <a href="{{path_prefix}}/{{result.lang_key}}/{{result.page_key}}">{{result.page_title}}</a><br />
+        {{result.page_text|truncate(375)}}
+    </p>
+{% endfor %}
+    <p class='pager'>
+    {% if add.pager.page > 1 %} 
+    <a href="{{path_prefix}}/{{lang}}/pages/by{{add.list_type}}/{{add.arg}}/{{add.pager.start - add.pager.limit}}/{{add.pager.limit}}">&laquo; {{ _('Previous') }}</a>
+    {% endif %}
+    {{add.pager.page}}/{{add.pager.pages}}
+    {% if add.pager.page < add.pager.pages %}
+    <a href="{{path_prefix}}/{{lang}}/pages/by{{add.list_type}}/{{add.arg}}/{{add.pager.start + add.pager.limit}}/{{add.pager.limit}}">{{ _('Next') }} &raquo;</a>
+    {% endif %}
+    </p>
+{% elif add.search %}
+    <p>{{ _('No results for') }} "{{add.arg}}"</p>
+{% endif %}
+{% endblock %}
