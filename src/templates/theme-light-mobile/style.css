@@ -1,0 +1,156 @@
+body { 
+    background: #fff;
+    margin: 0px;
+    padding: 0px;
+    font-family: "Helvetica", "Verdana", "Arial";
+    text-align: center;
+    font-size: 1.8em;
+    color: #222;
+}
+a, a:active, a:visited { 
+    text-decoration: none;
+    color: #18e;
+    font-weight: bold;
+}
+a:hover { 
+    color: #2af;
+    text-decoration: underline;
+}
+a img { 
+    border: 1px solid #ccc;
+}
+a img:hover { 
+    border: 1px solid #ddd;
+}
+h1, h2, h3, h4, h5 {
+    margin-bottom: 2px;
+}
+h1:target, h2:target, h3:target, h4:target, h5:target { 
+    background-color: #ffa;
+}
+input[type="text"], input[type="password"] { 
+    padding: 3px;
+    border: 1px solid #aaa;
+    border-top: 1px solid #777;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+input[type="submit"], button { 
+    padding: 3px;
+    background-color: #2af;
+    font-weight: bold;
+    color: #fff;
+    border: 1px solid #abc;
+    border-bottom: 1px solid #89a;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    cursor: pointer;
+}
+#wrapper { 
+    margin: auto;
+    min-width: 200px;
+    max-width: 700px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: left;
+}
+#header { 
+    background: #333;
+    border-radius: 0px 0px 10px 10px;
+    -moz-border-radius: 0px 0px 10px 10px;
+    -webkit-border-radius: 0px 0px 10px 10px;
+}
+#header input[type="text"], #header input[type="password"] { 
+    padding: 6px;
+    border: 1px solid #777;
+    border-top: 1px solid #444;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+#header input[type="submit"], #header button { 
+    padding: 6px;
+    background-color: #2af;
+    font-weight: bold;
+    color: #fff;
+    border: 1px solid #456;
+    border-bottom: 1px solid #234;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    cursor: pointer;
+}
+#nav {
+    color: #fff;
+}
+#disqus { 
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+}
+#content h1, #content h2 { 
+    border-bottom: 1px solid #ddd;
+}
+#site_title { 
+    text-shadow: -1px -1px #05d; 
+    color: #4bf;
+}
+#page_title { 
+    text-shadow: 1px 1px 1px #bbb; 
+}
+#page_keywords p {
+    margin: 1px; 
+    padding: 3px;
+    color: #999;
+}
+#page_keywords .keyword { 
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #bbb;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background: #ccc;
+    font-weight: bold;
+    padding: 3px;
+    margin: 1px;
+    font-size: 0.9em;
+}
+#page_keywords a { 
+    color: #fff;
+}
+#footer { 
+    font-size: 0.9em;
+    text-align: center;
+    color: #444;
+}
+.pager { 
+    border: 1px solid #ececec;
+    padding: 3px;
+    margin: 2px;
+    text-align: center;
+}
+.table_of_contents, .contents { 
+    border: 1px solid #ddc;
+    background: #ffffee;
+    font-size: 1.0em;
+    padding: 3px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.table_of_contents p { 
+    margin: 0px;
+    padding: 2px;
+}
+.table_of_contents h3, .topic-title { 
+    padding: 3px;
+    margin: 0px;
+}
+.toc_heading { 
+    
+}
+.toc_top { 
+    float: right;
+    margin: 0px;
+}
