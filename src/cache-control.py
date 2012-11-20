@@ -43,6 +43,7 @@ class CacheControl(object):
         self._conf = self._ut._conf
         self._db = self._ut._db
         self._jtheme = self._ut._jtheme
+        self._jtheme_mobile = self._ut._jtheme_mobile
         self._jcache = self._ut._jcache
      
      
@@ -91,6 +92,9 @@ class CacheControl(object):
     # Run filter
     #
     def run_filter(self, cf, t="pre"):
+
+        text = self.pb['text']
+
         if self.pb['filetype'] not in cf.filetype_support:
             self.warn('%s not supported by %s: %s'\
                       %(self.pb['filetype'], cf.name, 
@@ -100,7 +104,7 @@ class CacheControl(object):
         self.out('Start Filter: %s %s...'%(cf.name, cf.version))
         p = re.compile(r'%s'%(cf.pattern), re.DOTALL)
         cf.debug = []
-        matches = p.findall(self.pb['text'])
+        matches = p.findall(text)
         for m in matches:
             if type(m) == tuple:
                 m = [l.encode('utf-8') for l in m]
@@ -111,9 +115,12 @@ class CacheControl(object):
             else:
                 rep = cf.post_filter(m)
             if rep:
-                self.pb['text'] = re.sub(p, rep, self.pb['text'], 1)
+                text = re.sub(p, rep, text, 1)
         for msg in cf.debug:
             self.out('>>> %s'%(msg))
+        self.pb['text'] = text
+        if t == 'pre':
+            self.pb['text_with_meta'] = text
         self.out('End Filter: %s %s'%(cf.name, cf.version))
         return True
         
@@ -240,9 +247,19 @@ class CacheControl(object):
             tpl = self._jtheme.get_template('menu.html')
             link_html = tpl.render(links=links_d)
             fh = open(os.path.join(self._conf.DIR_CACHE,
-                                   'special/%s__menu.html'%(lang_d['lang_key'])),'w')
+                                   'special/%s__menu.html'\
+                                   %(lang_d['lang_key'])),'w')
             fh.write(link_html)
             fh.close()
+            if self._conf.DIR_THEME != self._conf.DIR_THEME_MOBILE:
+                tpl = self._jtheme_mobile.get_template('menu.html')
+                link_html = tpl.render(links=links_d)
+                fh = open(os.path.join(self._conf.DIR_CACHE,
+                                       'special/%s__menu-mobile.html'\
+                                       %(lang_d['lang_key'])),'w')
+                fh.write(link_html)
+                fh.close()
+
         self.out('Done caching menus')
         
     
@@ -265,32 +282,35 @@ class CacheControl(object):
     # Convert the page to the appropriate format
     #
     def convert_page(self):
-                                        
+        
+        text = self.strip_meta_filters(self.pb['text'])        
+                                
         if self.pb['filename'].endswith('.md'):
             import markdown
             self.out('Converting MarkDown on %s'%(self.pb['filename']))
-            self.pb['text'] = markdown.markdown(self.pb['text'], output_format='html5')
+            text = markdown.markdown(text, output_format='html5')
             
         elif self.pb['filename'].endswith('.rst'):
             from docutils.core import publish_parts
             self.out('Converting to RST on %s'%(self.pb['filename']))
-            self.pb['text'] = publish_parts(self.pb['text'], writer_name='html')['html_body']
+            text = publish_parts(text, writer_name='html')['html_body']
         
         elif self.pb['filename'].endswith('.textile'):
             import textile
             self.out('Converting to Textile on %s'%(self.pb['filename']))
-            self.pb['text'] = unicode(textile.textile(self.pb['text']))
+            text = unicode(textile.textile(text))
         
         elif self.pb['filename'].endswith('.txt'):
             self.out('Converting TXT on %s'%(self.pb['filename']))
-            self.pb['text'] = self.pb['text'].replace('<','&lt;')
-            self.pb['text'] = self.pb['text'].replace('>','&gt;')
-            self.pb['text'] = '<pre>%s</pre>'%(self.pb['text'])
+            text = text.replace('<','&lt;')
+            text = text.replace('>','&gt;')
+            text = '<pre>%s</pre>'%(text)
             
         else:
             self.out('Treating as html')
             self.pb['filetype'] = 'html'
         
+        self.pb['text'] = text
         self.out('Done with conversion')
         return True
         
@@ -301,7 +321,7 @@ class CacheControl(object):
          
         regex = r'\(\((\s{0,1}%s.*?)\)\)'%(key)            
         p = re.compile(regex)
-        m = p.search(self.pb['text'])
+        m = p.search(self.pb['text_with_meta'])
         if m:
             data = m.groups()[0]
             data = [d.strip() for d in data.split('|')]
@@ -493,7 +513,8 @@ class CacheControl(object):
     #
     def load_page_into_buffer(self, fname):
         self.out('Loading %s into buffer'%(fname))
-        self.pb['text'] = open(fname, 'r').read()
+        self.pb['text_with_meta'] = open(fname, 'r').read()
+        self.pb['text'] = self.pb['text_with_meta']
         self.pb['filename'] = fname   
         self.pb['filetype'] = fname.split('.')[-1]     
         self.pb['filename_cache'] = self.get_page_filename_cache()
@@ -545,13 +566,13 @@ class CacheControl(object):
         if self._db._errors:
             self.err('Problem adding page: %s'%(self._db._errors))
         self.out('Done updating database')
-            
-     
+    
+ 
     ##
     # Strip meta filters
     #
     def strip_meta_filters(self, text):
-        filt_re = r'(\(\(.*?\)\))'
+        filt_re = r'(\(\(.*?\|.*?\)\))'
         p = re.compile(filt_re)
         return re.sub(p,'',text)
         

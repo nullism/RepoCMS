@@ -22,6 +22,9 @@ a img {
 a img:hover { 
     border: 1px solid #ddd;
 }
+h1, h2, h3, h4, h5 {
+    margin-bottom: 2px;
+}
 h1:target, h2:target, h3:target, h4:target, h5:target { 
     background-color: #710;
 }

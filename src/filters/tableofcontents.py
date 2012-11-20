@@ -46,7 +46,7 @@ class CustomFilter(object):
         elif self.pb['filetype'] == 'rst':
             # Place TOC in raw HTML to protect against RST
             result_a = match[0].replace(match[0],
-                       '.. raw:: html\n\n\t<div>%s</div>\n'\
+                       '\n.. raw:: html\n\n\t<div>%s</div>\n'\
                        %(match[0]))
             result = result_a + match[1]
 

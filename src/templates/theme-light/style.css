@@ -22,6 +22,9 @@ a img {
 a img:hover { 
     border: 1px solid #ddd;
 }
+h1, h2, h3, h4, h5 { 
+    margin-bottom: 2px;
+}
 h1:target, h2:target, h3:target, h4:target, h5:target { 
     background-color: #ffa;
 }
@@ -91,7 +94,7 @@ input[type="submit"], button {
     text-shadow: 1px 1px 1px #bbb; 
 }
 #page_keywords p {
-    margin: 1px; 
+    margin: 3px; 
     padding: 3px;
     color: #999;
 }
@@ -109,6 +112,7 @@ input[type="submit"], button {
 }
 #page_keywords a { 
     color: #fff;
+    font-weight: normal;
 }
 #footer { 
     font-size: 0.8em;

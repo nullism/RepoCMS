@@ -41,6 +41,9 @@ class Utility(object):
         self._errors = []
         self._messages = []
         self._jtheme = Environment(loader=FileSystemLoader(self._conf.DIR_THEME))
+        self._jtheme_mobile = self._jtheme
+        if self._conf.DIR_THEME != self._conf.DIR_THEME_MOBILE:
+            self._jtheme_mobile = Environment(loader=FileSystemLoader(self._conf.DIR_THEME_MOBILE))
         theme_mod = imp.load_source('theme',os.path.join(self._conf.DIR_THEME, 'theme.py'))
         self._theme_data = theme_mod.theme_data
         self._jcache = Environment(loader=FileSystemLoader(self._conf.DIR_CACHE))

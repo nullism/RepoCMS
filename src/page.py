@@ -30,6 +30,7 @@ class Page(Handler):
         self._conf = self._ut._conf
         self._db = self._ut._db
         self._jtheme = self._ut._jtheme
+        self._jtheme_mobile = self._ut._jtheme_mobile
         self._jcache = self._ut._jcache
         self._errors = []
         self._messages = []
@@ -40,6 +41,7 @@ class Page(Handler):
         self._site['title'] = self._conf.SITE_TITLE
         self._lang = self._conf.DEFAULT_LANG
         self._template_add = {}
+        self._is_mobile = self.get_is_mobile()
 
     
     ##
@@ -113,7 +115,7 @@ class Page(Handler):
         if not page_d:
             return self.template_404()
         if page_d.get('page_redirect'):
-            self._messages.append(_('Redirected from ')\
+            self._messages.append(self._('Redirected from ')\
                                   +'<strong>%s</strong>'\
                                   %(page_d['page_title']))
             return self.handle_redirect(page_d['page_redirect'])
@@ -224,21 +226,21 @@ class Page(Handler):
                  "data":payload }
         return json.dumps(data)
         
-
-    
+ 
     ##
     # Wrapper for get template
     #
     def template(self,f):        
         try:
-            self._menu = self._jcache.get_template(
-                         'special/%s__menu.html'%(self._lang)).render()
+            menu = self.template_menu()
         except(Exception),e:
-            self._menu = 'Could not load menu for language "%s"'\
-                         %(self._lang)
+            menu = 'Could not load menu for language "%s"'%(self._lang)
             
         try:
-            tpl = self._jtheme.get_template(f)
+            if self._is_mobile:
+                tpl = self._jtheme_mobile.get_template(f)
+            else:
+                tpl = self._jtheme.get_template(f)
         except(Exception),e:
             self._errors.append('Template Error: %s'%(e))
             return self.template_404()
@@ -250,7 +252,7 @@ class Page(Handler):
                         theme_data=self._ut._theme_data,
                         _ = self._,
                         lang=self._lang,
-                        menu=self._menu,
+                        menu=menu,
                         page=self._page,
                         site=self._site,
                         add=self._template_add,
@@ -266,7 +268,23 @@ class Page(Handler):
         self.set_status(404)
         return self.template('body-404.html')
         
-    
+
+    ##
+    # Template menu
+    #
+    def template_menu(self):
+        if self._is_mobile:
+            menu = self._jcache.get_template(
+                    'special/%s__menu-mobile.html'\
+                    %(self._lang)).render()   
+        else:
+            menu = self._jcache.get_template(
+                    'special/%s__menu.html'\
+                    %(self._lang)).render()   
+            
+        return menu  
+
+ 
     ##
     # Weblog: Audit
     #

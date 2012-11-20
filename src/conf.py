@@ -17,6 +17,7 @@ DIR_UPLOAD_NAME = 'uploads'
 
 # The directory path to the active theme
 DIR_THEME = DIR_BASE + '/templates/theme-light'
+DIR_THEME_MOBILE = DIR_BASE + '/templates/theme-light-mobile'
 
 # You probably shouldn't change these
 DIR_CACHE = DIR_BASE + '/templates/cache'

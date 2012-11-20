@@ -32,6 +32,7 @@ class Handler(object):
         self._method = self._env['REQUEST_METHOD']
         self._path = self._env['PATH_INFO']
         self._remote_addr = self._env['REMOTE_ADDR']
+        self._user_agent = self._env['HTTP_USER_AGENT']
         self.set_status(200)
 
         try:
@@ -146,6 +147,22 @@ class Handler(object):
         for t in self.get_cookie_tuples():
             l.append(t)
         return l
+
+
+    ##
+    # Check if mobile device
+    # @returns [bool] True if mobile, False otherwise
+    #
+    def get_is_mobile(self):
+        ua = self._user_agent.lower()
+        if "android" in ua:
+            return True
+        elif "iphone" in ua:
+            return True
+        elif "blackberry" in ua:
+            return True
+
+        return False
 
     ##
     # Return redirect
