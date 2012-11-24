@@ -49,6 +49,7 @@ EMAIL_SUPPORT = 'support@localhost'
 #
 ENABLED_FILTERS = [ 
                     'code', # Highlight code, uses pygments
+                    'dewplayer', # Play Mp3s
                     'disqus', # Embeds disqus comments
                     'image', # Parse images, uses PIL
                     'include', # Include external pages
@@ -60,7 +61,7 @@ ENABLED_FILTERS = [
                   ]
 
 # The WebHost
-SERVER_NAME = 'localhost'
+SERVER_NAME = 'www.repocms.com'
 PATH_PROTOCOL = 'http://'
 PATH_WEBHOST = PATH_PROTOCOL + SERVER_NAME
 
