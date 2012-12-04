@@ -30,16 +30,25 @@ function updateObjectValues() {
     document.getElementById('dew_movie').value = './'+player;
     return true;
 }
+function writePlayer() { 
+    var div = document.getElementById('player_div');
+    var player = getUrlVars()['player'];
+    if(!player) { player = 'dewplayer-mini.swf'; }
+    var mp3s = getUrlVars()['mp3s'];
+    var html = '<object type="application/x-shockwave-flash" '
+             + 'data="./'+ player +'" width="100%" height="100%">'
+             + '<param name="wmode" value="transparent" />'
+             + '<param name="movie" value="./'+ player +'" />'
+             + '<param id="flashvars" name="flashvars" value="mp3='+ mp3s +'&autoplay=1" />'
+             + '</object>';
+    div.innerHTML = html;
+}
 </script>
 </head>
-<body onload="updateObjectValues();">
+<body onload="writePlayer();">
 
-<div class="dewplayer" style="padding:0px; margin: 0px;">
-<object type="application/x-shockwave-flash" data="./dewplayer-mini.swf" id="dew_object" width="100%" height="100%">
-    <param name="wmode" value="transparent" /> 
-    <param name="movie" value="./dewplayer-mini.swf" id="dew_movie" /> 
-    <param id="flashvars" name="flashvars" value="default" /> 
-</object>
+<div class="dewplayer" style="padding:0px; margin: 0px;" id="player_div">
+<p>You need to enable JavaScript for the builtin player to work.</p>
 </div>
 </body>
 </html>

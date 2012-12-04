@@ -33,11 +33,11 @@ DEFAULT_LANG = 'eng'
 DEFAULT_PAGE = 'home'
 
 # Database configuration
-DB_USER = ''
+DB_USER = 'repocms'
 DB_PASS = ''
 DB_HOST = 'localhost'
 DB_PORT = ''
-DB_BASE = ''
+DB_BASE = 'repocms'
 
 # Email addresses
 EMAIL_NOREPLY = 'noreply@localhost'
@@ -49,6 +49,7 @@ EMAIL_SUPPORT = 'support@localhost'
 #
 ENABLED_FILTERS = [ 
                     'code', # Highlight code, uses pygments
+                    'contactme', # ContactME forms
                     'dewplayer', # Play Mp3s
                     'disqus', # Embeds disqus comments
                     'image', # Parse images, uses PIL
@@ -61,7 +62,7 @@ ENABLED_FILTERS = [
                   ]
 
 # The WebHost
-SERVER_NAME = 'www.repocms.com'
+SERVER_NAME = 'localhost'
 PATH_PROTOCOL = 'http://'
 PATH_WEBHOST = PATH_PROTOCOL + SERVER_NAME
 

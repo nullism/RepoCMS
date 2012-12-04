@@ -13,4 +13,9 @@
     </div>
 {% endif %}
 {{page.content}}
+
+{% if theme_data.addthis_page_block %}
+    {{ theme_data.addthis_page_block }}
+{% endif %}
+
 {% endblock %}

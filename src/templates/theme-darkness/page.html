@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}{{page.title|truncate(20)}}{% endblock %}
 {% block content %}
+{% if theme_data.addthis_page_block %}
+    {{ theme_data.addthis_page_block }}
+{% endif %}
 <h1 id="page_title">{{page.title}}</h1>
 {% if page.keywords %}
     <div id="page_keywords">

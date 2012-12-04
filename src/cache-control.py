@@ -102,7 +102,7 @@ class CacheControl(object):
             return True
             
         self.out('Start Filter: %s %s...'%(cf.name, cf.version))
-        p = re.compile(r'%s'%(cf.pattern), re.DOTALL)
+        p = re.compile(cf.pattern, re.DOTALL)
         cf.debug = []
         matches = p.findall(text)
         for m in matches:
