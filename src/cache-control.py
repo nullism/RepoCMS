@@ -102,14 +102,14 @@ class CacheControl(object):
             return True
             
         self.out('Start Filter: %s %s...'%(cf.name, cf.version))
-        p = re.compile(cf.pattern, re.DOTALL)
+        p = re.compile(cf.pattern, re.DOTALL|re.UNICODE)
         cf.debug = []
         matches = p.findall(text)
         for m in matches:
             if type(m) == tuple:
-                m = [l.encode('utf-8') for l in m]
+                m = [l for l in m]
             else:
-                m = m.encode('utf-8')
+                m = m
             if t.lower() == "pre":
                 rep = cf.pre_filter(m)
             else:
@@ -513,7 +513,7 @@ class CacheControl(object):
     #
     def load_page_into_buffer(self, fname):
         self.out('Loading %s into buffer'%(fname))
-        self.pb['text_with_meta'] = open(fname, 'r').read()
+        self.pb['text_with_meta'] = unicode(open(fname, 'r').read().decode('utf-8'))
         self.pb['text'] = self.pb['text_with_meta']
         self.pb['filename'] = fname   
         self.pb['filetype'] = fname.split('.')[-1]     
