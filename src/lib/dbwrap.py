@@ -22,7 +22,7 @@ class DBWrap(object):
         self.db = MySQLdb.connect(host,
                                   user,
                                   passwd,
-                                  db)
+                                  db, use_unicode=True, charset='utf8')
         self._cursor = self.db.cursor()
         self._errors = []
         self._debug = []
@@ -40,6 +40,9 @@ class DBWrap(object):
         desc = self._cursor.description
         rows = {}
         for (name, value) in zip(desc, data) :
+            if isinstance(value, basestring):
+                if not isinstance(value, unicode):
+                    value = unicode(value.decode('utf-8'))
             rows[name[0]] = value
         return rows
     

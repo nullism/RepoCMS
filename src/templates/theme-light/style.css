@@ -119,6 +119,10 @@ input[type="submit"], button {
     text-align: center;
     color: #444;
 }
+.created_date { 
+    font-size: 0.7em;
+    color: #444;
+}
 .pager { 
     border: 1px solid #ececec;
     padding: 3px;

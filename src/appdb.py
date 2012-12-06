@@ -85,15 +85,17 @@ class AppDB(DBWrap):
     #
     def add_or_update_page(self, d):
         d['page_modified'] = d.get('page_modified',int(time.time()))
+        d['page_created'] = d.get('page_created', int(time.time()))
         sql = '''
               INSERT INTO page (page_key, page_title, lang_key, 
-                                page_modified, page_text,
+                                page_created, page_modified, page_text,
                                 page_redirect)
               VALUES (%(page_key)s, %(page_title)s, %(lang_key)s, 
-                      %(page_modified)s, %(page_text)s,
+                      %(page_created)s, %(page_modified)s, %(page_text)s,
                       %(page_redirect)s)
               ON DUPLICATE KEY 
                 UPDATE page_modified=%(page_modified)s,
+                       page_created=%(page_created)s,
                        page_title=%(page_title)s,
                        page_text=%(page_text)s,
                        page_redirect=%(page_redirect)s

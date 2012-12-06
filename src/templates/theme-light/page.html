@@ -14,6 +14,7 @@
 {% endif %}
 {{page.content}}
 
+<p class="created_date">{{ _('Modified') }} <em>{{page.modified}}</em></p>
 {% if theme_data.addthis_page_block %}
     {{ theme_data.addthis_page_block }}
 {% endif %}

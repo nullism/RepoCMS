@@ -329,6 +329,19 @@ class CacheControl(object):
         return []
 
     ##
+    # Get the date / time stamp
+    #
+    def get_date(self):
+        d = self.get_meta_data('date')
+        if d:
+            epoch = int(time.mktime(
+                time.strptime(d[0],self._conf.TIME_STRING)
+                ))
+            print "EPOCH IS: %s"%(epoch)
+            return epoch
+        return int(time.time())
+
+    ##
     # Get the description
     #    
     def get_description(self):
@@ -559,6 +572,7 @@ class CacheControl(object):
                   'page_title': self.get_title(),
                   'page_keywords': self.get_keywords(),
                   'page_description': self.get_description(),
+                  'page_created': self.get_date(),
                   'page_redirect': self.get_redirect(),
                   'lang_key': self.pb['lang'],
                  }

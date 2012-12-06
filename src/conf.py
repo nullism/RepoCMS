@@ -79,3 +79,5 @@ PATH_UPLOAD = PATH_STATIC + '/uploads'
 # The title of your website
 SITE_TITLE = 'RepoCMS'
 
+# The time string format (strftime())
+TIME_STRING = '%Y-%m-%d %H:%M'

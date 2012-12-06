@@ -120,9 +120,14 @@ class Page(Handler):
                                   %(page_d['page_title']))
             return self.handle_redirect(page_d['page_redirect'])
         self._page['title'] = page_d.get('page_title')
-        self._page['modified'] = page_d.get('page_modified')
         self._page['lang'] = page_d.get('lang_key')
         self._page['keywords'] = page_d.get('page_keywords',[])
+        epoch_modified = page_d.get('page_modified')
+        epoch_created = page_d.get('page_created',epoch_modified)
+        self._page['created'] = time.strftime(self._conf.TIME_STRING, 
+                                           time.localtime(epoch_created))
+        self._page['modified'] = time.strftime(self._conf.TIME_STRING,
+                                           time.localtime(epoch_modified))
         try:
             self._page['content'] = self._jcache.get_template(page_file).render(
                                 path_static=self._conf.PATH_STATIC,
@@ -174,7 +179,7 @@ class Page(Handler):
     ##
     # HTML: Search
     #
-    def html_search(self, lang, start=0, limit=25):
+    def html_search(self, lang, start=0, limit=5):
         self._lang = lang
         try:
             start = int(start)
@@ -189,6 +194,8 @@ class Page(Handler):
             search = self.POST('search')
         else: 
             search = self.urldecode(self.GET('search'))
+        
+        search = unicode(search.decode('utf-8'))
             
         if len(search) < 3:
             self._errors.append('Search query must be at least 3 characters')
@@ -203,7 +210,7 @@ class Page(Handler):
                 
         self._template_add['results'] = results
         self._template_add['search'] = search
-        self._template_add['search_encoded'] = self.urlencode(search)
+        self._template_add['search_encoded'] = self.urlencode(search.encode('utf-8'))
         self._template_add['pager'] = {'start':start,
                                        'limit':limit,
                                        'total':total,
