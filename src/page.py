@@ -162,7 +162,7 @@ class Page(Handler):
             keywords = self._db.get_keywords_by_lang(lang_key)
             results = self._db.get_pages_by_keyword(arg, start, limit)
             total = self._db.get_pages_by_keyword_total(arg)
-    
+        #elif list_type == 'date': 
         
         self._template_add['keywords'] = keywords 
         self._template_add['arg'] = arg

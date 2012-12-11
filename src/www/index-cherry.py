@@ -43,12 +43,18 @@ def application(environ, start_response):
     start_response(page._status, page.get_headers())
     return [output.encode('utf-8')]
 
-cherrypy.server.socket_host = '0.0.0.0'
-cherrypy.server.socket_port = 8080
-cherrypy.tree.graft(application, '/')
-cherrypy.tree.mount(None, conf.PATH_STATIC, {'/' : {
-    'tools.staticdir.dir': conf.DIR_STATIC,
-    'tools.staticdir.on': True,
-    }})
-cherrypy.engine.start()
-cherrypy.engine.block()
+if __name__ == "__main__":
+    try: 
+        port = int(sys.argv[1])
+    except:
+        print "Usage: %s <port>"%(sys.argv[0])
+        sys.exit(1)
+    cherrypy.server.socket_host = '0.0.0.0'
+    cherrypy.server.socket_port = port
+    cherrypy.tree.graft(application, conf.PATH_PREFIX + '/')
+    cherrypy.tree.mount(None, conf.PATH_STATIC, {'/' : {
+        'tools.staticdir.dir': conf.DIR_STATIC,
+        'tools.staticdir.on': True,
+        }})
+    cherrypy.engine.start()
+    cherrypy.engine.block()

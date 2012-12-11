@@ -62,7 +62,7 @@ ENABLED_FILTERS = [
                   ]
 
 # The WebHost
-SERVER_NAME = 'localhost'
+SERVER_NAME = 'www.example.com'
 PATH_PROTOCOL = 'http://'
 PATH_WEBHOST = PATH_PROTOCOL + SERVER_NAME
 
@@ -77,7 +77,7 @@ PATH_STATIC = '/static'
 PATH_UPLOAD = PATH_STATIC + '/uploads'
 
 # The title of your website
-SITE_TITLE = 'RepoCMS'
+SITE_TITLE = 'Example'
 
 # The time string format (strftime())
 TIME_STRING = '%Y-%m-%d %H:%M'

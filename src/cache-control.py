@@ -288,7 +288,7 @@ class CacheControl(object):
         if self.pb['filename'].endswith('.md'):
             import markdown
             self.out('Converting MarkDown on %s'%(self.pb['filename']))
-            text = markdown.markdown(text, output_format='html5')
+            text = markdown.markdown(text, ['footnotes'], output_format='html5')
             
         elif self.pb['filename'].endswith('.rst'):
             from docutils.core import publish_parts
