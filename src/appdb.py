@@ -184,19 +184,54 @@ class AppDB(DBWrap):
         page['page_keywords'] = self.sql_select(keyword_sql, False,
                                 {'page_key':page_key, 'lang_key':lang_key})
         return page
-        
+       
+
+    ##
+    # Get pages by date
+    #
+    def get_pages_by_date(self, lang_key, sort='DESC', start=0, limit=25):
+        sql = '''
+              SELECT * FROM page
+              WHERE lang_key = %(lang_key)s
+              '''
+        if sort in ['ASC','DESC']:
+            sql += 'ORDER BY page_created %s\n'%(sort)
+
+        sql += "LIMIT %d,%d"%(start, limit)
+
+        d = { 'lang_key':lang_key,
+              'start':start,
+              'limit':limit }
+        return self.sql_select(sql, False, d)   
+
+    ##
+    # Get pages by date total
+    #
+    def get_pages_by_date_total(self, lang_key):
+        sql = '''
+              SELECT COUNT(p.page_key) AS total FROM page p
+              WHERE p.lang_key = %(lang_key)s
+              '''
+
+        d = { 'lang_key':lang_key }
+        row = self.sql_select(sql, True, d)    
+        return row['total'] 
+
+ 
     ##
     # Get pages by keyword
     #
-    def get_pages_by_keyword(self, keyword, start=0, limit=25):
+    def get_pages_by_keyword(self, keyword, lang_key, start=0, limit=25):
         sql = '''
               SELECT p.* FROM page p
               JOIN keyword k ON k.page_key=p.page_key
               AND k.lang_key = p.lang_key
               AND k.keyword = %(keyword)s
+              AND p.lang_key = %(lang_key)s
               LIMIT %(start)s,%(limit)s
               '''
         d = { 'keyword':keyword,
+              'lang_key':lang_key,
               'start':start,
               'limit':limit }
         return self.sql_select(sql, False, d)   
@@ -205,16 +240,16 @@ class AppDB(DBWrap):
     ##
     # Get pages by keyword total
     # 
-    def get_pages_by_keyword_total(self, keyword, start=0, limit=25):
+    def get_pages_by_keyword_total(self, keyword, lang_key):
         sql = '''
               SELECT COUNT(p.page_key) AS total FROM page p
               JOIN keyword k ON k.page_key=p.page_key
               AND k.lang_key = p.lang_key
               AND k.keyword = %(keyword)s
+              AND p.lang_key = %(lang_key)s
               '''
         d = { 'keyword':keyword,
-              'start':start,
-              'limit':limit }
+              'lang_key':lang_key }
         row = self.sql_select(sql, True, d)    
         return row['total'] 
 

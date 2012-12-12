@@ -93,7 +93,7 @@ input[type="submit"], button {
 #page_title { 
     text-shadow: 1px 1px 1px #bbb; 
 }
-#page_keywords p {
+#page_keywords p, #page_bydate p {
     margin: 3px; 
     padding: 3px;
     color: #999;

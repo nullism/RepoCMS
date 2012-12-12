@@ -145,7 +145,7 @@ class Page(Handler):
     ##
     # HTML: Page List
     #
-    def html_page_list(self, lang_key, list_type, arg, start=0, limit=25):
+    def html_page_list(self, lang_key, list_type, arg=None, start=0, limit=5):
         self._lang = lang_key
         try:
             start = int(start)
@@ -155,15 +155,20 @@ class Page(Handler):
 
         results = []
         total = 0
-        arg = self.urldecode(arg)
-        keywords = []
+        if arg:
+            arg = self.urldecode(arg)
+        keywords = self._db.get_keywords_by_lang(lang_key)
 
         if list_type == 'keyword':
-            keywords = self._db.get_keywords_by_lang(lang_key)
-            results = self._db.get_pages_by_keyword(arg, start, limit)
-            total = self._db.get_pages_by_keyword_total(arg)
-        #elif list_type == 'date': 
-        
+            if arg:
+                results = self._db.get_pages_by_keyword(arg, lang_key, start, limit)
+                total = self._db.get_pages_by_keyword_total(arg, lang_key)
+        elif list_type == 'date':
+            if not arg:
+                arg = 'DESC' 
+            results = self._db.get_pages_by_date(lang_key, arg.upper(), start, limit)
+            total = self._db.get_pages_by_date_total(lang_key)       
+ 
         self._template_add['keywords'] = keywords 
         self._template_add['arg'] = arg
         self._template_add['results'] = results

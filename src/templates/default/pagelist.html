@@ -5,6 +5,8 @@
 {% if add.keywords %}
     <div id="page_keywords">
     <p>
+    {{ _('By keywords') }}:
+
     {% for kw in add.keywords %}
     <a href="{{path_prefix}}/{{lang}}/pages/bykeyword/{{kw.keyword}}">
         <span class="keyword">{{kw.keyword}}</span>
@@ -12,9 +14,20 @@
     {% endfor %}
     </p>
     </div>
+{% elif add.list_type == 'keyword' %}
+    <p>{{ _('No keywords defined') }}.</p>
 {% endif %}
+<div id="page_bydate">
+    <p>
+        {{ _('By date') }}:
+        <a href="{{path_prefix}}/{{lang}}/pages/bydate/asc/">{{ _('Ascending') }}</a> |
+        <a href="{{path_prefix}}/{{lang}}/pages/bydate/desc/">{{ _('Descending') }}</a>
+    </p>
+</div>
+
+<p><strong>{{add.results|count}}</strong> / {{add.pager.total}} {{ _('results for') }} "{{add.arg}}"</p>
+
 {% if add.results %}
-    <p><strong>{{add.results|count}}</strong> / {{add.pager.total}} {{ _('results for') }} "{{add.arg}}"</p>
 {% for result in add.results %}
     <p class="search_result">
         <a href="{{path_prefix}}/{{result.lang_key}}/{{result.page_key}}">{{result.page_title}}</a><br />
