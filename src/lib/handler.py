@@ -105,7 +105,7 @@ class Handler(object):
             methods = pd[1]
             func = pd[2]
             ctype = pd[3]
-            p = re.compile(regex)
+            p = re.compile(regex, re.UNICODE)
             m = p.search(self._path)
             
             if(m):

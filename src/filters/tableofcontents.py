@@ -92,7 +92,7 @@ class CustomFilter(object):
             
             pat = '%s'%(etree.tostring(node))
             rep = '<%s id="%s" class="toc_heading">%s'\
-                  '<span class="toc_top"><a href="#toc">top</a></span></%s>'\
+                  '<span class="toc_top"><a href="#toc">&#8617;</a></span></%s>'\
                   '<p style="clear: both;"></p>'\
                   %(node.tag, this_id, node.text, node.tag)
             text = text.replace(pat, rep, 1)

@@ -187,9 +187,9 @@ class AppDB(DBWrap):
        
 
     ##
-    # Get pages by date
+    # Get pages by created time
     #
-    def get_pages_by_date(self, lang_key, sort='DESC', start=0, limit=25):
+    def get_pages_by_created(self, lang_key, sort='DESC', start=0, limit=25):
         sql = '''
               SELECT * FROM page
               WHERE lang_key = %(lang_key)s
@@ -205,9 +205,9 @@ class AppDB(DBWrap):
         return self.sql_select(sql, False, d)   
 
     ##
-    # Get pages by date total
+    # Get pages by created time total
     #
-    def get_pages_by_date_total(self, lang_key):
+    def get_pages_by_created_total(self, lang_key):
         sql = '''
               SELECT COUNT(p.page_key) AS total FROM page p
               WHERE p.lang_key = %(lang_key)s
@@ -253,6 +253,37 @@ class AppDB(DBWrap):
         row = self.sql_select(sql, True, d)    
         return row['total'] 
 
+    
+    ##
+    # Get pages by modified time
+    #
+    def get_pages_by_modified(self, lang_key, sort='DESC', start=0, limit=25):
+        sql = '''
+              SELECT * FROM page
+              WHERE lang_key = %(lang_key)s
+              '''
+        if sort in ['ASC','DESC']:
+            sql += 'ORDER BY page_modified %s\n'%(sort)
+
+        sql += "LIMIT %d,%d"%(start, limit)
+
+        d = { 'lang_key':lang_key,
+              'start':start,
+              'limit':limit }
+        return self.sql_select(sql, False, d)   
+
+    ##
+    # Get pages by modified time total
+    #
+    def get_pages_by_modified_total(self, lang_key):
+        sql = '''
+              SELECT COUNT(p.page_key) AS total FROM page p
+              WHERE p.lang_key = %(lang_key)s
+              '''
+
+        d = { 'lang_key':lang_key }
+        row = self.sql_select(sql, True, d)    
+        return row['total'] 
 
             
     ##
@@ -261,7 +292,7 @@ class AppDB(DBWrap):
     def get_pages_by_search(self, search, start=0, limit=25):
         
         sql = '''
-              SELECT page_title, page_text, page_key, lang_key,
+              SELECT page_title, page_text, page_key, lang_key, page_created, page_modified,
                      MATCH (page_text) AGAINST (%(search)s IN BOOLEAN MODE) as page_score
               FROM page
               WHERE MATCH (page_text) AGAINST (%(search)s IN BOOLEAN MODE)

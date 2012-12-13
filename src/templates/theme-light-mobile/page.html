@@ -7,7 +7,7 @@
         <p>
         {{ _('Tagged in ') }}
         {% for kw in page.keywords %}
-        <a href="{{path_prefix}}/{{lang}}/pages/bykeyword/{{kw.keyword}}"><span class="keyword">{{ kw.keyword }}</span></a>
+        <a href="{{path_prefix}}/{{lang}}/pages/bykeyword?arg={{kw.keyword}}"><span class="keyword">{{ kw.keyword }}</span></a>
         {% endfor %}
         </p>
     </div>

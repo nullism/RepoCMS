@@ -93,7 +93,7 @@ input[type="submit"], button {
 #page_title { 
     text-shadow: 1px 1px 1px #bbb; 
 }
-#page_keywords p, #page_bydate p {
+#page_keywords p, #page_bydate p, #page_bysearch p {
     margin: 3px; 
     padding: 3px;
     color: #999;
@@ -146,8 +146,14 @@ input[type="submit"], button {
     padding: 3px;
     margin: 0px;
 }
+.timedelta { 
+    font-size: 0.8em;
+    color: #888;
+}
 .toc_heading { 
-    
+    float: left;  
+    width: 100%;
+    margin-bottom: 5px;
 }
 .toc_top { 
     float: right;

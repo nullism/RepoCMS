@@ -17,10 +17,14 @@
 <body>
 <div id="wrapper">
 <div id="header">
-    <div style="float: left;"><h2 id="site_title" style="margin: 10px;">{{site.title}}</h2></div>
+    <div style="float: left;">
+        <h2 id="site_title" style="margin: 10px;">
+            <a href="{{path_prefix}}/">{{site.title}}</a>
+        </h2>
+    </div>
     <div style="float: right;">
-        <form action="{{path_prefix}}/{{lang}}/search" method="post">
-        <p style="margin: 10px;"><input type="text" name="search" />
+        <form action="{{path_prefix}}/{{lang}}/pages/bysearch" method="post">
+        <p style="margin: 10px;"><input type="text" name="arg" />
         <input type="submit" name="submit" value="search" /></p>
         </form>
     </div>

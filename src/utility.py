@@ -21,6 +21,7 @@ import argparse
 import imp
 from hashlib import sha1
 from jinja2 import Environment, FileSystemLoader
+import custom_jinja_filters
 path = os.path.abspath(os.path.join(os.path.dirname(__file__),"./lib/"))
 if path not in sys.path:
     sys.path.insert(0,path)
@@ -48,7 +49,12 @@ class Utility(object):
         self._theme_data = theme_mod.theme_data
         self._jcache = Environment(loader=FileSystemLoader(self._conf.DIR_CACHE))
         self.silent = True
-        
+
+        # Define custom filters
+        self._jtheme.filters['timedelta'] = custom_jinja_filters.timedelta
+        self._jtheme_mobile.filters['timedelta'] = custom_jinja_filters.timedelta
+        self._jtheme.filters['timestamp'] = custom_jinja_filters.timestamp
+        self._jtheme_mobile.filters['timestamp'] = custom_jinja_filters.timestamp        
         
     ##
     # Wrapper: Translate

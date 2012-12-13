@@ -9,8 +9,6 @@
 {% include 'style.css' %}
 {% include 'code.css' %}
 </style>
-<script>
-</script>
 </head>
 <body>
 <div id="wrapper">
@@ -21,8 +19,8 @@
         </h2>
     </div>
     <div style="float: right;">
-        <form action="{{path_prefix}}/{{lang}}/search" method="post">
-        <p style="margin: 10px;"><input type="text" name="search" />
+        <form action="{{path_prefix}}/{{lang}}/pages/bysearch" method="post">
+        <p style="margin: 10px;"><input type="text" name="arg" />
         <input type="submit" name="submit" value="search" /></p>
         </form>
     </div>

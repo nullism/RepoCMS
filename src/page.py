@@ -145,7 +145,7 @@ class Page(Handler):
     ##
     # HTML: Page List
     #
-    def html_page_list(self, lang_key, list_type, arg=None, start=0, limit=5):
+    def html_page_list(self, lang_key, list_type=None, start=0, limit=5):
         self._lang = lang_key
         try:
             start = int(start)
@@ -153,24 +153,49 @@ class Page(Handler):
         except:
             return self.template_404()
 
+        arg = None
         results = []
         total = 0
-        if arg:
-            arg = self.urldecode(arg)
+        if self.REQ('arg'):
+            arg = self.urldecode(self.REQ('arg'))
         keywords = self._db.get_keywords_by_lang(lang_key)
 
-        if list_type == 'keyword':
+        if not list_type:
+            results = self._db.get_pages_by_created(lang_key, 'DESC', start, limit)
+            total = self._db.get_pages_by_created_total(lang_key)
+            list_type = 'created'
+            arg = 'all pages'
+
+        elif list_type == 'keyword':
             if arg:
                 results = self._db.get_pages_by_keyword(arg, lang_key, start, limit)
                 total = self._db.get_pages_by_keyword_total(arg, lang_key)
-        elif list_type == 'date':
+
+        elif list_type == 'created':
             if not arg:
                 arg = 'DESC' 
-            results = self._db.get_pages_by_date(lang_key, arg.upper(), start, limit)
-            total = self._db.get_pages_by_date_total(lang_key)       
- 
+            results = self._db.get_pages_by_created(lang_key, arg.upper(), start, limit)
+            total = self._db.get_pages_by_created_total(lang_key)
+
+        elif list_type == 'modified':
+            if not arg:
+                arg = 'DESC' 
+            results = self._db.get_pages_by_modified(lang_key, arg.upper(), start, limit)
+            total = self._db.get_pages_by_modified_total(lang_key)
+
+        elif list_type == 'search':   
+            if not arg or len(arg) < 3:
+                self._errors.append('Search string must be at least three characters')
+            else:
+                arg = unicode(arg.decode('utf-8'))
+                results = self._db.get_pages_by_search(arg, start, limit)
+                total = self._db.get_pages_by_search_total(arg)
+        else:
+            return self.template_404()
+            
         self._template_add['keywords'] = keywords 
         self._template_add['arg'] = arg
+        self._template_add['arg_encoded'] = arg
         self._template_add['results'] = results
         self._template_add['list_type'] = list_type
         self._template_add['pager'] = {'start':start,
@@ -181,48 +206,6 @@ class Page(Handler):
         return self.template('pagelist.html')
         
             
-    ##
-    # HTML: Search
-    #
-    def html_search(self, lang, start=0, limit=5):
-        self._lang = lang
-        try:
-            start = int(start)
-            limit = int(limit)
-        except:
-            return self.template_404()
-            
-        if not self.REQ('search'):
-            return self.template('search.html')
-        
-        if self._method == 'POST':
-            search = self.POST('search')
-        else: 
-            search = self.urldecode(self.GET('search'))
-        
-        search = unicode(search.decode('utf-8'))
-            
-        if len(search) < 3:
-            self._errors.append('Search query must be at least 3 characters')
-            return self.template('search.html')
-        
-        results = self._db.get_pages_by_search(search, start, limit)
-        total = self._db.get_pages_by_search_total(search)
-        for r in results:
-            ss = search.split()
-            for s in ss: 
-                r['page_text'] = r['page_text'].replace(s, '<strong>%s</strong>'%(s))
-                
-        self._template_add['results'] = results
-        self._template_add['search'] = search
-        self._template_add['search_encoded'] = self.urlencode(search.encode('utf-8'))
-        self._template_add['pager'] = {'start':start,
-                                       'limit':limit,
-                                       'total':total,
-                                       'pages':int(ceil(float(total)/limit)),
-                                       'page':int(ceil(float(start)/limit))+1}
-                                       
-        return self.template('search.html')
         
    
     ##

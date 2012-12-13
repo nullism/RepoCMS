@@ -148,7 +148,9 @@ input[type="submit"], button {
     margin: 0px;
 }
 .toc_heading { 
-    
+    float: left;
+    width: 100%;
+    margin-bottom: 5px;    
 }
 .toc_top { 
     float: right;

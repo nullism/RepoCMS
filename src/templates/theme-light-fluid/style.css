@@ -143,8 +143,10 @@ input[type="submit"], button {
     padding: 3px;
     margin: 0px;
 }
-.toc_heading { 
-    
+.toc_heading {
+    float: left;
+    width: 100%;
+    margin-bottom: 5px;
 }
 .toc_top { 
     float: right;

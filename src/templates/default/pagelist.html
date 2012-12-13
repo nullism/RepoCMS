@@ -8,7 +8,7 @@
     {{ _('By keywords') }}:
 
     {% for kw in add.keywords %}
-    <a href="{{path_prefix}}/{{lang}}/pages/bykeyword/{{kw.keyword}}">
+    <a href="{{path_prefix}}/{{lang}}/pages/bykeyword?arg={{kw.keyword}}">
         <span class="keyword">{{kw.keyword}}</span>
     </a>x{{kw.total}} &nbsp;
     {% endfor %}
@@ -19,10 +19,21 @@
 {% endif %}
 <div id="page_bydate">
     <p>
-        {{ _('By date') }}:
-        <a href="{{path_prefix}}/{{lang}}/pages/bydate/asc/">{{ _('Ascending') }}</a> |
-        <a href="{{path_prefix}}/{{lang}}/pages/bydate/desc/">{{ _('Descending') }}</a>
+        {{ _('By created date') }}:
+        <a href="{{path_prefix}}/{{lang}}/pages/bycreated?arg=asc">{{ _('Oldest') }}</a> |
+        <a href="{{path_prefix}}/{{lang}}/pages/bycreated?arg=desc">{{ _('Newest') }}</a>
+        {{ _('By modified date') }}:
+        <a href="{{path_prefix}}/{{lang}}/pages/bymodified?arg=asc">{{ _('Oldest') }}</a> |
+        <a href="{{path_prefix}}/{{lang}}/pages/bymodified?arg=desc">{{ _('Newest') }}</a>
     </p>
+</div>
+<div id="page_bysearch">
+    <form action="{{path_prefix}}/{{lang}}/pages/bysearch" method="post">
+    <p> {{ _('By search') }}
+        <input type="text" name="arg" />
+        <input type="submit" name="submit" value="Search" />
+    </p>
+    </form>
 </div>
 
 <p><strong>{{add.results|count}}</strong> / {{add.pager.total}} {{ _('results for') }} "{{add.arg}}"</p>
@@ -30,17 +41,20 @@
 {% if add.results %}
 {% for result in add.results %}
     <p class="search_result">
-        <a href="{{path_prefix}}/{{result.lang_key}}/{{result.page_key}}">{{result.page_title}}</a><br />
-        {{result.page_text|truncate(375)}}
+        <a href="{{path_prefix}}/{{result.lang_key}}/{{result.page_key}}">{{result.page_title}}</a> 
+            <span class='timedelta'>{{_('created')}} {{result.page_created|timestamp}}</span>.
+            <span class='timedelta'>{{_('modified')}} {{result.page_modified|timedelta('%d day, %H hours, %M minutes, %s seconds ago')}}</span>.
+        <br />
+        {{result.page_text|truncate(375)}} 
     </p>
 {% endfor %}
     <p class='pager'>
     {% if add.pager.page > 1 %} 
-    <a href="{{path_prefix}}/{{lang}}/pages/by{{add.list_type}}/{{add.arg}}/{{add.pager.start - add.pager.limit}}/{{add.pager.limit}}">&laquo; {{ _('Previous') }}</a>
+    <a href="{{path_prefix}}/{{lang}}/pages/by{{add.list_type}}/{{add.pager.start - add.pager.limit}}/{{add.pager.limit}}?arg={{add.arg_encoded}}">&laquo; {{ _('Previous') }}</a>
     {% endif %}
     {{add.pager.page}}/{{add.pager.pages}}
     {% if add.pager.page < add.pager.pages %}
-    <a href="{{path_prefix}}/{{lang}}/pages/by{{add.list_type}}/{{add.arg}}/{{add.pager.start + add.pager.limit}}/{{add.pager.limit}}">{{ _('Next') }} &raquo;</a>
+    <a href="{{path_prefix}}/{{lang}}/pages/by{{add.list_type}}/{{add.pager.start + add.pager.limit}}/{{add.pager.limit}}?arg={{add.arg_encoded}}">{{ _('Next') }} &raquo;</a>
     {% endif %}
     </p>
 {% elif add.arg %}
