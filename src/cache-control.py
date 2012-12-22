@@ -337,7 +337,6 @@ class CacheControl(object):
             epoch = int(time.mktime(
                 time.strptime(d[0],self._conf.TIME_STRING)
                 ))
-            print "EPOCH IS: %s"%(epoch)
             return epoch
         return int(time.time())
 
