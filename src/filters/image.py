@@ -80,10 +80,10 @@ class CustomFilter(object):
         if(len(mlist) > 2) and mlist[2]:
             height = int(mlist[2])
         if(len(mlist) > 3) and mlist[3]:
-            if scale_type in ['thumb','fit']:
+            if mlist[3] in ['thumb','fit']:
                 scale_type = mlist[3]
         if(len(mlist) > 4) and mlist[4]:
-            css_class = '%s %s'%(css_class, mlist[4])
+            css_class = '%s'%(mlist[4])
        
         if width and height: 
             fname_thumb = self.make_thumbnail(image, width, height, scale_type)
