@@ -245,7 +245,11 @@ class CacheControl(object):
                 continue
                 
             tpl = self._jtheme.get_template('menu.html')
-            link_html = tpl.render(links=links_d)
+            link_html = tpl.render(links=links_d, lang=lang_d['lang_key'],
+                                   path_prefix=self._conf.PATH_PREFIX,
+                                   path_static=self._conf.PATH_STATIC,
+                                   path_webhost=self._conf.PATH_WEBHOST,
+                                   theme_data=self._ut._theme_data)
             fh = open(os.path.join(self._conf.DIR_CACHE,
                                    'special/%s__menu.html'\
                                    %(lang_d['lang_key'])),'w')

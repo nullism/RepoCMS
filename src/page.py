@@ -102,7 +102,9 @@ class Page(Handler):
             lang_key = self._conf.DEFAULT_LANG
         page_key = self._conf.DEFAULT_PAGE
         return self.html_page(lang_key, page_key)
-        
+
+
+               
    
     ##
     # HTML: Page

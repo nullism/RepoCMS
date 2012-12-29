@@ -4,7 +4,7 @@ body {
     padding: 0px;
     font-family: "Helvetica", "Verdana", "Arial";
     text-align: center;
-    font-size: 1.8em;
+    font-size: 1.0em;
     color: #222;
 }
 a, a:active, a:visited { 
@@ -16,52 +16,49 @@ a:hover {
     color: #2af;
     text-decoration: underline;
 }
-
 a img { 
     border: 1px solid #ccc;
 }
 a img:hover { 
     border: 1px solid #ddd;
 }
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5 { 
     margin-bottom: 2px;
 }
 h1:target, h2:target, h3:target, h4:target, h5:target { 
     background-color: #ffa;
 }
 input[type="text"], input[type="password"] { 
-    padding: 3px;
-    border: 1px solid #aaa;
-    border-top: 1px solid #777;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-top: 1px solid #aaa;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
 }
 input[type="submit"], button { 
-    padding: 3px;
+    padding: 5px;
     background-color: #2af;
     font-weight: bold;
     color: #fff;
-    border: 1px solid #abc;
-    border-bottom: 1px solid #89a;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    border: 1px solid #3bf;
+    border-bottom: 1px solid #19e;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
     cursor: pointer;
 }
-
 #wrapper { 
     margin: auto;
-    min-width: 200px;
-    max-width: 700px;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin-top: 0px;
+    width: 960px;
     text-align: left;
 }
-#header { 
+#header {
     background: #333;
+    margin: 0px;
+    border: 1px solid #333;
     border-radius: 0px 0px 10px 10px;
-    -moz-border-radius: 0px 0px 10px 10px;
     -webkit-border-radius: 0px 0px 10px 10px;
 }
 #header input[type="text"], #header input[type="password"] { 
@@ -84,9 +81,6 @@ input[type="submit"], button {
     -webkit-border-radius: 3px;
     cursor: pointer;
 }
-#nav {
-    color: #fff;
-}
 #disqus { 
     border-top: 1px solid #ccc;
     padding-top: 5px;
@@ -95,14 +89,15 @@ input[type="submit"], button {
     border-bottom: 1px solid #ddd;
 }
 #site_title { 
-    text-shadow: -1px -1px #05d; 
+    text-shadow: -1px -1px #05d;
+    margin: 10px; 
     color: #4bf;
 }
 #page_title { 
     text-shadow: 1px 1px 1px #bbb; 
 }
-#page_keywords p {
-    margin: 1px; 
+#page_keywords p, #page_bydate p, #page_bysearch p {
+    margin: 3px; 
     padding: 3px;
     color: #999;
 }
@@ -116,18 +111,20 @@ input[type="submit"], button {
     font-weight: bold;
     padding: 3px;
     margin: 1px;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 #page_keywords a { 
     color: #fff;
+    font-weight: normal;
 }
 #footer { 
-    font-size: 0.9em;
+    font-size: 0.8em;
     text-align: center;
     color: #444;
 }
-.noborder, .noborder img, .noborder img:hover { 
-    border: 0px;
+.created_date { 
+    font-size: 0.7em;
+    color: #444;
 }
 .pager { 
     border: 1px solid #ececec;
@@ -138,7 +135,7 @@ input[type="submit"], button {
 .table_of_contents, .contents { 
     border: 1px solid #ddc;
     background: #ffffee;
-    font-size: 1.0em;
+    font-size: 0.8em;
     padding: 3px;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -152,15 +149,19 @@ input[type="submit"], button {
     padding: 3px;
     margin: 0px;
 }
-.thumbnail { 
-    overflow: auto;
+.timedelta { 
+    font-size: 0.8em;
+    color: #888;
 }
 .toc_heading { 
-    float: left;
+    float: left;  
     width: 100%;
-    margin-bottom: 5px;    
+    margin-bottom: 5px;
 }
 .toc_top { 
     float: right;
     margin: 0px;
+}
+.noborder, .noborder a, .noborder a img { 
+    border: 0px;
 }

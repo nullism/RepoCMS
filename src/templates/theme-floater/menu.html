@@ -1,0 +1,57 @@
+<div class="nav" id="nav">
+    <ul id="menu" class="menu nopad">
+    <li class='nopad'>
+        <a style="padding: 2px;" href="{{path_prefix}}/"><img src="{{path_static}}/{{theme_data.name}}/logo.png" style="border: 0px;" /></a> 
+    </li>
+{% for link in links %}
+    <li class='nopad'>
+        {% if link.link_path != '' %}
+        <a href="{{link.link_path}}" target="{{link.link_target}}" title="{{link.link_title}}">{{link.link_name}}</a>
+        {% else %}
+            <span>{{link.link_name}}</span>
+        {% endif %}
+        <ul class='nopad'>
+    {% for link2 in link.link_children %}
+        <li class='nopad'>
+            {% if link2.link_path != '' %}
+            <a href="{{link2.link_path}}" target="{{link2.link_target}}" title="{{link2.link_title}}">{{link2.link_name}}</a>
+            {% else %}
+                <span>{{link2.link_name}}</span>
+            {% endif %}
+            <ul class='nopad'>
+        {% for link3 in link2.link_children %}
+            <li class='nopad submenu'>
+                <a href="{{link3.link_path}}" target="{{link3.link_target}}" title="{{link3.link_title}}">{{link3.link_name}}</a>
+            </li>
+        {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+        </ul>
+    </li>
+{% endfor %}
+    <li class='nopad'>
+    <a href='#' onclick="return toggle_search();">Search</a>
+    <div id="search_div" style="display:none;">
+        <form method="post" action="{{path_prefix}}/{{lang}}/pages/bysearch">
+        <input type="text" name="arg" />
+        <input type="submit" name="submit" value="search" />
+        </form>
+    </div>
+    </li>
+
+    </ul>
+</div>
+
+<script>
+var dropdown=new TINY.dropdown.init("dropdown", {id:'menu', active:'menuhover'});
+function toggle_search() {
+    var search_div = document.getElementById('search_div');
+    if(search_div.style.display == 'block') { 
+        search_div.style.display = 'none';
+    } else { 
+        search_div.style.display = 'block';
+    }
+    return false;
+}
+</script>
