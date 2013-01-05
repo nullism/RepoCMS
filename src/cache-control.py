@@ -384,6 +384,13 @@ class CacheControl(object):
     # Get the minified text
     # 
     def get_text_min(self):
+
+        index = self.get_page_index()
+        if index == 'title':
+            return self.get_title()
+        elif index == 'none':
+            return ''
+
         tmin = self.pb['text']
         html_re = r'(\<.*?\>)'
         p = re.compile(html_re)
@@ -420,6 +427,15 @@ class CacheControl(object):
         title = self.pb['filename'].split('/')[-1]\
                 .split('\\')[-1].split('__')[-1].split('.')[0]
         return title
+
+    ##
+    # Get the search index flag
+    #
+    def get_page_index(self):
+        i = self.get_meta_data('index')
+        if i:
+            return i[0].lower()
+        return 'full'
 
         
     ##
