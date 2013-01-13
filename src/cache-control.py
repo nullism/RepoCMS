@@ -297,7 +297,8 @@ class CacheControl(object):
         elif self.pb['filename'].endswith('.rst'):
             from docutils.core import publish_parts
             self.out('Converting to RST on %s'%(self.pb['filename']))
-            text = publish_parts(text, writer_name='html')['html_body']
+            text = publish_parts(text, writer_name='html', 
+                settings_overrides=self._conf.RST_SETTINGS)['html_body']
         
         elif self.pb['filename'].endswith('.textile'):
             import textile

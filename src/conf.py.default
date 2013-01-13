@@ -82,3 +82,8 @@ SITE_TITLE = 'Example'
 
 # The time string format (strftime())
 TIME_STRING = '%Y-%m-%d %H:%M'
+
+# ReStructuredText specific settings (settings_overrides)
+RST_SETTINGS = {
+    'doctitle_xform': False,
+}
